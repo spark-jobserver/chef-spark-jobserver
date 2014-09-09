@@ -1,0 +1,13 @@
+# Environment and deploy file
+# For use with bin/server_deploy, bin/server_package etc.
+DEPLOY_HOSTS="hostname1.net
+              hostname2.net"
+
+APP_USER=spark
+APP_GROUP=spark
+INSTALL_DIR=<%= @install_dir %>
+LOG_DIR=<%= @log_dir %>
+SPARK_HOME=<%= @spark_dir %>
+SPARK_CONF_HOME=<%= @spark_conf_dir %>
+# Only needed for Mesos deploys
+<%= "SPARK_EXECUTOR_URI=#{@mesos_spark_executor_uri}" if @mesos_spark_executor_uri %>
