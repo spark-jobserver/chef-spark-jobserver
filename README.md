@@ -6,13 +6,17 @@ Dev quickstart:
 
 ```ruby
 # minimal required configuration; these values have no defaults and must be provided
-
-# path to your spark install
-node.spark.jobserver.spark_home = '/usr/local/spark'
-node.spark.jobserver.spark_conf_dir = '/etc/spark'
-
-# you need to provide the jobserver jar; this gets downloaded, but can be a `file://` uri
-node.spark.jobserver.jar_url = 'https://domain.com/some/path/spark-job-server.jar'
+chef.json = {
+  spark: {
+    jobserver: {
+      # path to your spark install
+      spark_home: '/usr/local/spark',
+      spark_conf_dir: '/usr/local/spark/conf',
+      # you need to provide the jobserver jar; this gets downloaded, but can be a `file://` uri
+      jar_url: 'https://domain.com/some/path/spark-job-server.jar'
+    }
+  }
+}
 
 include_recipe 'spark-jobserver::default'
 ```
@@ -55,6 +59,7 @@ Chefspec [tested on](spec/default_helper.rb):
 Confirmed to work on:
 
 - Ubuntu 12.04
+- Ubuntu 14.04
 
 With Chef 11.8+
 
@@ -66,9 +71,13 @@ See [attributes](attributes/default.rb) for all options.
 
 The only cookbook dependency is runit; java is assumed to be installed somehow.
 
-### With Spark Standalone
+Follow the appropriate guides for Spark
+[standalone](http://spark.apache.org/docs/latest/spark-standalone.html) or
+[Mesos](http://spark.apache.org/docs/latest/running-on-mesos.html) deployment.
+The relevant attributes are:
 
-### With Spark on Mesos
+- `node.spark.jobserver.master_type`
+- `node.spark.jobserver.master_url`
 
 ### spark-jobserver::default
 
@@ -88,6 +97,7 @@ Include `spark-jobserver::default` in your node's `run_list`:
 2. Create a named feature branch (i.e. `add-new-recipe`)
 3. Write your change
 4. Write tests for your change (if applicable)
+  - At least a Chefspec proving the fix; Test Kitchen coming later
 5. Run the tests, ensuring they all pass
 6. Submit a Pull Request
 

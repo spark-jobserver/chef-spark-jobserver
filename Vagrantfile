@@ -27,14 +27,15 @@ Vagrant.configure('2') do |config|
     chef.json = {
       spark: {
         jobserver: {
-          port: 8090,
           spark_home: "/vagrant/#{spark_install_dir}",
+          spark_conf_dir: "/vagrant/#{spark_install_dir}/conf",
           jar_url: 'file:///vagrant/spark-job-server.jar',
         }
       }
     }
 
     chef.run_list = [
+      # demo_setup must come first
       'recipe[spark-jobserver::demo_setup]',
       'recipe[spark-jobserver::default]',
     ]

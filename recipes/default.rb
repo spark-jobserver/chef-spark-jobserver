@@ -60,7 +60,7 @@ template "#{install_dir}/#{env_name}.conf" do
   notifies :reload, 'runit_service[spark-jobserver]', :delayed
 end
 
-# must be called log4j-server; hardcoded in server_start.sh
+# must be called log4j-server; hardcoded in server_start.sh/sv-run
 template "#{install_dir}/log4j-server.properties" do
   source 'jobserver.log4j.properties.erb'
   variables({

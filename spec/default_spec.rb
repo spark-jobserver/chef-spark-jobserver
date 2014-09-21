@@ -10,6 +10,9 @@ shared_examples 'general tests' do |platform, platform_version|
         platform: platform,
         version: platform_version
       ) do |node|
+        node.force_default.spark.jobserver.spark_home = '/usr/local/spark'
+        node.force_default.spark.jobserver.spark_conf_dir = '/usr/local/spark/conf'
+        node.force_default.spark.jobserver.jar_url = 'http://somewhe.re/jar.jar'
       end
     end
 
