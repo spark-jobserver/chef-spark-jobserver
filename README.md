@@ -1,6 +1,6 @@
 # spark-jobserver cookbook
 
-Installs Ooyala's [Spark Jobserver](https://github.com/ooyala/spark-jobserver).
+Installs the [Spark Jobserver](../spark-jobserver/spark-jobserver).
 
 Quickstart:
 
