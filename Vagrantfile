@@ -14,13 +14,13 @@ Vagrant.configure('2') do |config|
   # provisioning
 
   # quick-and-dirty spark installation
-  spark_dist_tarball = 'spark-1.0.2-bin-hadoop2.tgz'
-  spark_install = 'spark-1.0.2-bin-hadoop2'
+  spark_install_dir = ENV['SPARK_DIST'] || 'spark-1.1.0-bin-hadoop2.4'
+  spark_dist_tarball = "#{spark_install_dir}.tgz"
 
-  unless File.exists?(spark_install)
+  unless File.exists?(spark_install_dir)
     `tar -xvzf #{spark_dist_tarball}`
-    `cp #{spark_install}/conf/spark-defaults.conf.template #{spark_install}/conf/spark-defaults.conf`
-    `cp #{spark_install}/conf/spark-env.sh.template #{spark_install}/conf/spark-env.sh`
+    `cp #{spark_install_dir}/conf/spark-defaults.conf.template #{spark_install_dir}/conf/spark-defaults.conf`
+    `cp #{spark_install_dir}/conf/spark-env.sh.template #{spark_install_dir}/conf/spark-env.sh`
   end
 
   config.vm.provision :chef_solo do |chef|
@@ -28,7 +28,7 @@ Vagrant.configure('2') do |config|
       spark: {
         jobserver: {
           port: 8090,
-          spark_home: "/vagrant/#{spark_install}",
+          spark_home: "/vagrant/#{spark_install_dir}",
           jar_url: 'file:///vagrant/spark-job-server.jar',
         }
       }

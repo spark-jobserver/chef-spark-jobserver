@@ -22,10 +22,9 @@ spark {
 
   # universal context configuration.  These settings can be overridden, see README.md
   context-settings {
-    # Number of cores to allocate.  Required.
-    num-cpu-cores = <%= @default_context_settings['num_cpu'] %>
-    # Executor memory per node, -Xmx style eg 512m, #1G, etc.
-    memory-per-node = "<%= @default_context_settings['memory'] %>"
+    <% @default_context_settings.each do |k, v| %>
+      <%= "#{k} = #{v}" %>
+    <% end %>
   }
 
   # predefined Spark contexts
@@ -33,8 +32,9 @@ spark {
     # define additional contexts here
     <% @default_contexts.each do |name, settings| %>
       <%= "#{name} {" %>
-        <%= "num-cpu-cores = #{settings['num_cpu']}" %>
-        <%= "memory-per-node = #{settings['memory']}" %>
+        <% settings.each do |k, v| %>
+          <%= "#{k} = #{v}" %>
+        <% end %>
       <%= "}" %>
     <% end %>
   }

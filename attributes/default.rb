@@ -35,16 +35,19 @@ default.spark.jobserver.jar_dir = '/var/spark-jobserver/jars'
 default.spark.jobserver.file_dir = '/var/spark-jobserver/filedao'
 
 default.spark.jobserver.default_context_settings = {
-  'num_cpu' => 2,
-  'memory' => '512m',
+  # Number of cores to allocate. Required.
+  # TODO throw exception if this isn't set
+  'num-cpu-cores' => 2,
+  # Executor memory per node, -Xmx style eg 512m, #1G, etc.
+  'memory-per-node' => '512m',
 }
 
 # these are created on startup; none are created by default, an example is provided below if you want this
 default.spark.jobserver.default_contexts = { }
 #default.spark.jobserver.default_contexts = {
 #  'context-name' => {
-#    'num_cpu' => 2,
-#    'memory' => '512m',
+#    'num-cpu-cores' => 2,
+#    'memory-per-node' => '512m',
 #  },
 #}
 

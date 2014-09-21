@@ -20,5 +20,5 @@ bin/*
 .kitchen.local.yml
 
 spark-*-bin-*
-spark-job-server.jar
+spark-job-server*.jar
 job-server-tests*.jar

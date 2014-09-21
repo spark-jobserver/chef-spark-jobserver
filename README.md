@@ -2,7 +2,7 @@
 
 Installs the [Spark Jobserver](../spark-jobserver/spark-jobserver).
 
-Quickstart:
+Dev quickstart:
 
 ```ruby
 # minimal required configuration; these values have no defaults and must be provided
@@ -11,23 +11,33 @@ Quickstart:
 node.spark.jobserver.spark_home = '/usr/local/spark'
 node.spark.jobserver.spark_conf_dir = '/etc/spark'
 
-# you need to provide the jobserver jar
+# you need to provide the jobserver jar; this gets downloaded, but can be a `file://` uri
 node.spark.jobserver.jar_url = 'https://domain.com/some/path/spark-job-server.jar'
 
 include_recipe 'spark-jobserver::default'
 ```
 
-To use the provided [Vagrantfile](Vagrantfile) to spin up a test instance:
+To use the provided [Vagrantfile](Vagrantfile) to spin up a demo instance:
 
-1. Copy the Spark distribution binary into the repo root. Something like
-   `spark-1.0.2-bin-hadoop2.tgz`.
-2. Copy the jobserver jar and the jobserver sample app jar into the repo root.
-   Something like `spark-job-server.jar` and `job-server-tests-0.3.1.jar`.
-   [Build instructions](TODO).
+1. Copy the Spark distribution binary into the repo root. By default this is
+   assumed to be `spark-1.1.0-bin-hadoop2.4.tgz`. See below if you wish to use
+   a different Spark distro.
+2. Copy the jobserver jar into the repo root. By default this is assumed to be
+   `spark-job-server.jar`. Building the jobserver itself is easy: `pushd
+   .../spark-jobserver; sbt clean assembly`.
 3. Spin up the Vagrant instance: `vagrant up`
+  - If you want to use a different Spark distro, set the `SPARK_DIST`
+    environment variable (_without_ the extension):
+    `SPARK_DIST=spark-1.1.0-bin-cdh4 vagrant up`
 4. Now you can browse the Jobserver UI at <http://33.33.33.123:8090> and go
    through the [jobserver
    examples](https://github.com/spark-jobserver/spark-jobserver#wordcountexample-walk-through).
+
+Note that this repo assumes RVM; YMMV with other installations such as ChefDK.
+The Vagrant demo requires following plugins:
+
+- [`vagrant-berkshelf`](https://github.com/berkshelf/vagrant-berkshelf)
+- [`vagrant-omnibus`](https://github.com/opscode/vagrant-omnibus)
 
 ## Supported Platforms
 
