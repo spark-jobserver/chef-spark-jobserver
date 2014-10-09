@@ -1,0 +1,47 @@
+# Template for a Spark Job Server configuration file
+# When deployed these settings are loaded when job server starts
+#
+# Spark Cluster / Job Server configuration
+spark {
+  # spark.master will be passed to each job's JobContext
+  master = "<%= @master_url %>"
+
+  # Default # of CPUs for jobs to use for Spark standalone cluster
+  <%= "job-number-cpus = #{@standalone_num_cpu}" if @standalone_num_cpu %>
+
+  jobserver {
+    port = <%= @jobserver_port %>
+    jar-store-rootdir = "<%= @jar_dir %>"
+
+    jobdao = spark.jobserver.io.JobFileDAO
+
+    filedao {
+      rootdir = "<%= @file_dir %>"
+    }
+  }
+
+  # universal context configuration.  These settings can be overridden, see README.md
+  context-settings {
+    <% @default_context_settings.each do |k, v| %>
+      <%= "#{k} = #{v}" %>
+    <% end %>
+  }
+
+  # predefined Spark contexts
+  contexts {
+    # define additional contexts here
+    <% @default_contexts.each do |name, settings| %>
+      <%= "#{name} {" %>
+        <% settings.each do |k, v| %>
+          <%= "#{k} = #{v}" %>
+        <% end %>
+      <%= "}" %>
+    <% end %>
+  }
+
+  # This needs to match SPARK_HOME for cluster SparkContexts to be created successfully
+  home = "<%= @spark_home %>"
+}
+
+# Note that you can use this file to define settings not only for job server,
+# but for your Spark jobs as well.  Spark job configuration merges with this configuration file as defaults.
