@@ -4,6 +4,8 @@
 # Spark Cluster / Job Server configuration
 spark {
   # spark.master will be passed to each job's JobContext
+  # this is optional; set to nil to disable (and let it be inferred from the environment)
+  #<%= "master = \"#{@master_url}\"" if @master_url %>
   master = "<%= @master_url %>"
 
   # Default # of CPUs for jobs to use for Spark standalone cluster
